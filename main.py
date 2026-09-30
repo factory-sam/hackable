@@ -35,11 +35,9 @@ def storeapi():
     if request.method == 'GET':
         g.db = connect_db()
         curs = g.db.execute("SELECT * FROM shop_items")
-        cur2 = g.db.execute("SELECT * FROM employees")
         items = [{'items':[dict(name=row[0], quantity=row[1], price=row[2]) for row in curs.fetchall()]}]
-        empls = [{'employees':[dict(username=row[0], password=row[1]) for row in cur2.fetchall()]}]
         g.db.close()
-        return jsonify(items+empls)
+        return jsonify(items)
 
     elif request.method == 'POST':
         g.db = connect_db()
